@@ -10,15 +10,15 @@ RunLoopAssertion.prototype = {
   assert: function(){
     var run = this.env.Ember.run;
 
+    // Close out any remaining run loops
     if (run.currentRunLoop) {
-      QUnit.ok(false, "Should not be in a run loop at end of test");
       while (run.currentRunLoop) {
         run.end();
       }
     }
 
+    // Cancel any remaining timers
     if (run.hasScheduledTimers()) {
-      QUnit.ok(false, "Ember run should not have scheduled timers at end of test");
       run.cancelTimers();
     }
   },
